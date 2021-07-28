@@ -32,6 +32,7 @@ h1{
     --main-grad: linear-gradient(90deg, rgba(51,51,142,1) 0%, rgba(78,144,204,1) 100%);
     --green-color:#3cd63a;
 }
+
 body{
     font-family: var(--main-font);
     background-color: var(--bg-color);
