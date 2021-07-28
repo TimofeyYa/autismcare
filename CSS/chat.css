@@ -1,0 +1,123 @@
+:root{
+    --accent-color: hsl(209, 55%, 56%);
+    --main-font: 'Gotham Pro', sans-serif;
+    --white-color: white;
+    --grey-color: #707070;
+    --red-color: #74373b;
+    --purple-color: #33338e;
+    --bg-color: #e6e6e6;
+    --main-grad: linear-gradient(90deg, rgba(51,51,142,1) 0%, rgba(78,144,204,1) 100%);
+    --green-color:#3cd63a;
+}
+.chats-block__pic img{
+    min-width: 85px;
+    min-height: 85px;
+    max-width: 115px;
+    max-height: 115px;
+}
+.chats-block__pic{
+    height: 85px;
+    width: 85px;
+    border-radius:50%;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+.chats-block{
+    display: flex;
+    border-bottom: 2px solid var(--bg-color);
+    padding-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+.chats-block:not(:first-child){
+    margin-top: 18px;
+}
+.chats-block:hover{
+    border-bottom: 2px solid var(--purple-color);
+}
+.chats-block:hover .chats-block__pic{
+ transform: scale(1.03,1.03);
+}
+.chats-block__text{
+    padding-left: 16px;
+    
+}
+.chats-block__name h3{
+    font-size: 23px;
+    font-weight: 500;
+}
+.chats-block__lastmes{
+    font-size: 18px;
+    font-weight: 400;
+    overflow: hidden;
+    height: 28px;
+    display: flex;
+    align-items:center;
+    margin-bottom: 6px;
+}
+.chats-block__date time{
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+.messager__top .chats-block{
+    cursor:default;
+    align-items:center;
+}
+.messager__top .chats-block__pic img{
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 85px;
+    max-height: 85px;
+}
+.messager__top .chats-block__pic{
+    height: 60px;
+    width: 60px;
+
+}
+.messager__top .chats-block__name h3{
+    font-size: 21px;
+    font-weight: 500;
+}
+.chats-block__lastmes a{
+    font-size: 17px;
+}
+.chats-block__lastmes a:hover{
+    text-decoration: underline;
+}
+.messager__wrap{
+    position: relative;
+    overflow: hidden;
+}
+.messager__back a{
+    font-size: 16px;
+    color: white;
+    font-weight: 500;
+    position: absolute;
+    top: 0px;
+    left:0px;
+    background-color:var(--purple-color);
+    height: 25px;
+    width: 90px;
+    padding-left: 6px;
+    padding-top: 5px;
+    border-bottom-right-radius:10px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.messager__back svg{
+    width: 11px;
+    fill: white;
+    opacity: 0;
+    transform: rotate(180deg);
+    transition: 0.15s;
+}
+.messager__back a:hover svg{
+    opacity: 1;
+    margin-right: 5px;
+}
+.messager__chat{
+    width: 100%;
+    height: 570px;
+    overflow-y: scroll;
+}
