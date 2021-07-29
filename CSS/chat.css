@@ -201,6 +201,7 @@
     z-index: 4;
     fill: white;
     cursor: pointer;
+    transition: 0.2s;
 }
 .messager__control-send{
     right: 25px;
@@ -216,4 +217,7 @@
 .messager__control-add svg{
     width: 25px;
     height: 30px;
+}
+.messager__control-svg:hover{
+    fill: var(--accent-color);
 }

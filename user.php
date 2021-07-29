@@ -78,7 +78,7 @@
                         <div class="aboutUser__btn">
 
                             <?php if(!isset($_GET['edit'])){?>
-                            <button 
+                            <button onclick="window.location.href='chat.php?mess=<?php echo $main_number;?>'"
                                 class="main-btn__gra profil_edit-btn">Написать</button>
                             <?php };?>
                         </div>

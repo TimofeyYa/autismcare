@@ -20,6 +20,19 @@
 
    }
 
+   $messId = $_GET['mess'];
+   
+   $check_userMess = mysqli_query($connect_users, "SELECT * FROM `accaunts` WHERE `main_number` = '$messId'");
+   $check_userMess = mysqli_fetch_assoc($check_userMess);
+
+   $check_userMessInfo = mysqli_query($connect_users, "SELECT * FROM `accaunts-info` WHERE `main_number` = '$messId'");
+   $check_userMessInfo = mysqli_fetch_assoc($check_userMessInfo);
+
+   if ($messId > $main_number){
+       $chatId = $messId + $main_number ;
+   } else {
+       $chatId =  $main_number + $messId ;
+   }
 
 ?>
 <!DOCTYPE html>
@@ -154,14 +167,14 @@
                         <div class="messager__top">
                             <div class="chats-block">
                                 <div class="chats-block__pic">
-                                    <img src="uploads/<?php echo $_SESSION['user']['avatar']; ?>" alt="">
+                                    <img src="uploads/<?php echo $check_userMessInfo['avatar']; ?>" alt="">
                                 </div>
                                 <div class="chats-block__text">
                                     <div class="chats-block__name">
-                                        <h3>Ян Динилов</h3>
+                                        <h3><?php echo $check_userMess['name']?></h3>
                                     </div>
                                     <div class="chats-block__lastmes">
-                                        <a href="user.php">Перейти в профиль</a>
+                                        <a href="user.php?userid=<?php echo $messId;?>">Перейти в профиль</a>
                                     </div>
                                 </div>
                             </div>
@@ -183,107 +196,13 @@
                                     </div>
                                 </div>
 
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-me">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-user">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-me">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-user">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-me">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-user">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-me">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-user">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-me">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-user">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-me">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-user">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
+                     
+
 
                             </div>
                             <div class="messager__control">
                                 <div class="messager__control-content">
-                                    <textarea name="" id="" ></textarea>
+                                    <textarea class="messager__control-textarea" name="<?php echo $main_number;?>" id="" ></textarea>
                                     <div class="messager__control-svg messager__control-send">
                                         <svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24"
                                             width="512" xmlns="http://www.w3.org/2000/svg">
@@ -370,6 +289,7 @@
     </main>
     <?php require_once('INC/footer.php')?>
     <script src="JS/system.js"></script>
+    <script src="JS/chat.js"></script>
 
 </body>
 
