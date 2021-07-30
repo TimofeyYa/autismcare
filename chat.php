@@ -34,6 +34,13 @@
        $chatId =  $main_number + $messId ;
    }
 
+
+   $check_chatMess = mysqli_query($connect_users, "SELECT * FROM `chat__message` WHERE `chat_number` = '$chatId'");
+
+   $myChats1 = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `main_number1` = '$main_number'");
+   $myChats2 = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `main_number2` = '$main_number'");
+
+   
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -58,55 +65,87 @@
         <?php if (!isset($_GET['mess'])){?>
         <section class="chats">
             <div class="container">
+                
                 <div class="page__block chats__wrap">
-                    <div class="chats-block">
+                    <?php while($chatUser = mysqli_fetch_array($myChats1)){
+                        $userMainNum = $chatUser['main_number2'];
+                        $userChatNum = $chatUser['chat_number'];
+
+                        $checkAcc = mysqli_query($connect_users,"SELECT * FROM `accaunts` WHERE `main_number`='$userMainNum'");
+                        $checkAcc = mysqli_fetch_assoc($checkAcc);
+
+                        $checkInfo = mysqli_query($connect_users,"SELECT * FROM `accaunts-info` WHERE `main_number`='$userMainNum'");
+                        $checkInfo = mysqli_fetch_assoc($checkInfo);
+
+                        $checkMess = mysqli_query($connect_users,"SELECT * FROM `chat__message` WHERE `chat_number`='$userChatNum'");
+
+                        $lastMes;
+                        $maxId = 0;
+                        while ($whileId = mysqli_fetch_array($checkMess)){
+                            if ($whileId['id'] > $maxId){
+                                $lastMes = $whileId['message'];
+                            }
+                            
+                        }
+                        ?>
+                    <a href="?mess=<?php echo $checkAcc['main_number'];?>" class="chats-block">
                         <div class="chats-block__pic">
-                            <img src="uploads/<?php echo $_SESSION['user']['avatar']; ?>" alt="">
+                            <img src="uploads/<?php echo $checkInfo['avatar']; ?>" alt="">
                         </div>
                         <div class="chats-block__text">
                             <div class="chats-block__name">
-                                <h3>Ян Динилов</h3>
+                                <h3><?php echo $checkAcc['name'];?></h3>
                             </div>
                             <div class="chats-block__lastmes">
-                                <p>Какой то текст</p>
+                                <p><?php echo $lastMes;?></>
+                            </div>
+                            <?php if ($chatUser['haveNew'] == 'yes'){?>
+                            <div class="chats-block__date">
+                                <time>Новое сообщение</time>
+                            </div>
+                            <?php }?>
+                        </div>
+                    </a>
+                    <?php }?>
+
+                    <?php while($chatUser = mysqli_fetch_array($myChats2)){
+                        $userMainNum = $chatUser['main_number1'];
+                        $userChatNum = $chatUser['chat_number'];
+
+                        $checkAcc = mysqli_query($connect_users,"SELECT * FROM `accaunts` WHERE `main_number`='$userMainNum'");
+                        $checkAcc = mysqli_fetch_assoc($checkAcc);
+
+                        $checkInfo = mysqli_query($connect_users,"SELECT * FROM `accaunts-info` WHERE `main_number`='$userMainNum'");
+                        $checkInfo = mysqli_fetch_assoc($checkInfo);
+
+                        $checkMess = mysqli_query($connect_users,"SELECT * FROM `chat__message` WHERE `chat_number`='$userChatNum'");
+
+                        $lastMes;
+                        $maxId = 0;
+                        while ($whileId = mysqli_fetch_array($checkMess)){
+                            if ($whileId['id'] > $maxId){
+                                $lastMes = $whileId['message'];
+                            }
+                            
+                        }
+                        ?>
+                    <a href="?mess=<?php echo $checkAcc['main_number'];?>" class="chats-block">
+                        <div class="chats-block__pic">
+                            <img src="uploads/<?php echo $checkInfo['avatar']; ?>" alt="">
+                        </div>
+                        <div class="chats-block__text">
+                            <div class="chats-block__name">
+                                <h3><?php echo $checkAcc['name'];?></h3>
+                            </div>
+                            <div class="chats-block__lastmes">
+                                <p><?php echo $lastMes;?></>
                             </div>
                             <div class="chats-block__date">
                                 <time>09.10.2020</time>
                             </div>
                         </div>
-                    </div>
-                    <div class="chats-block">
-                        <div class="chats-block__pic">
-                            <img src="uploads/<?php echo $_SESSION['user']['avatar']; ?>" alt="">
-                        </div>
-                        <div class="chats-block__text">
-                            <div class="chats-block__name">
-                                <h3>Ян Динилов</h3>
-                            </div>
-                            <div class="chats-block__lastmes">
-                                <p>Какой то текст</p>
-                            </div>
-                            <div class="chats-block__date">
-                                <time>09.10.2020</time>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chats-block">
-                        <div class="chats-block__pic">
-                            <img src="uploads/<?php echo $_SESSION['user']['avatar']; ?>" alt="">
-                        </div>
-                        <div class="chats-block__text">
-                            <div class="chats-block__name">
-                                <h3>Ян Динилов</h3>
-                            </div>
-                            <div class="chats-block__lastmes">
-                                <p>Какой то текст</p>
-                            </div>
-                            <div class="chats-block__date">
-                                <time>09.10.2020</time>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
+                    <?php }?>
                 </div>
             </div>
         </section>
@@ -179,22 +218,14 @@
                                 </div>
                             </div>
                             <div class="messager__chat">
+                                <?php while ($message = mysqli_fetch_array($check_chatMess)){?>
                                 <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-me">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
+                                    <div class="messager__chat-mes <?php if ($message['main_number'] == $main_number){?>messager__chat-mes-me<?php } else{?>messager__chat-mes-user<?php }?>">
+                                        <p><?php echo $message['message'];?></>
                                     </div>
                                 </div>
-                                <div class="messager__chat-block">
-                                    <div class="messager__chat-mes messager__chat-mes-user">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                            ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                            facilisis. </p>
-                                    </div>
-                                </div>
+                                <?php }?>
+                          
 
                      
 
@@ -202,7 +233,8 @@
                             </div>
                             <div class="messager__control">
                                 <div class="messager__control-content">
-                                    <textarea class="messager__control-textarea" name="<?php echo $main_number;?>" id="" ></textarea>
+                                    <input type="hidden" class="messId" value="<?php echo $messId;?>">
+                                    <textarea class="messager__control-textarea" name="<?php echo $chatId;?>" id="" ></textarea>
                                     <div class="messager__control-svg messager__control-send">
                                         <svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24"
                                             width="512" xmlns="http://www.w3.org/2000/svg">
