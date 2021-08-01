@@ -134,4 +134,31 @@ window.addEventListener('DOMContentLoaded', ()=>{
         })
     })
 
+    // отправка анкеты
+
+    const sendAncBtn = document.querySelector('.quesList-block__btns button');
+    const ancId =document.querySelector('.myAncID').value;
+    const recipientNum = document.querySelector('.recipientNum').value;
+
+     sendAncBtn.addEventListener('click',sencAnc)
+
+    function sencAnc(){
+        const request = new XMLHttpRequest();
+
+        request.open('POST', 'vendor/addAncets.php');
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        let dataMes = `ancID=${ancId}&recNum=${recipientNum}`;
+
+        request.send(dataMes);
+        request.addEventListener('load', () => {
+         
+            if (request.status === 200) {
+                sendAncBtn.textContent = "Запись отправлена";
+                sendAncBtn.removeEventListener('click', sencAnc);
+            } else {
+                alert('Ошибка сервера, повторите попытку позже');
+            }
+        })
+    }
 })

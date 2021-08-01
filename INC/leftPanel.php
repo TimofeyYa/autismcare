@@ -31,6 +31,7 @@
                 <ul class="nav-panel__links">
                     <li class="nav-panel__item"><a href="search.php">Поиск</a></li>
                     <li class="nav-panel__item"><a href="chat.php">Чат</a></li>
+                    <li class="nav-panel__item"><a href="ancets.php">Анкеты</a></li>
 
                 </ul>
             </div>

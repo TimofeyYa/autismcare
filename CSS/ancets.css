@@ -1,0 +1,73 @@
+:root{
+    --accent-color: hsl(209, 55%, 56%);
+    --main-font: 'Gotham Pro', sans-serif;
+    --white-color: white;
+    --grey-color: #707070;
+    --red-color: #74373b;
+    --purple-color: #33338e;
+    --bg-color: #e6e6e6;
+    --main-grad: linear-gradient(90deg, rgba(51,51,142,1) 0%, rgba(78,144,204,1) 100%);
+    --green-color:#3cd63a;
+}
+.ancets__wrap{
+    border: 2px solid white;
+    background: var(--bg-color);
+    padding: 0;
+    padding-top: 31px;
+    position: relative;
+    overflow: hidden;
+}
+.ancets__content{
+    background: white;
+    width: 100%;
+    border-radius: 10px;
+    padding: 25px;
+    position: relative;
+    
+    
+}
+.ancets-control{
+    position: absolute;
+    top:0;
+    height: 37px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+    padding-bottom: 4px;
+    color: var(--accent-color);
+    font-size: 18px;
+    cursor: pointer;
+    
+}
+.ancets-control-select{
+    background-color:white;
+}
+.ancets-control__forme{
+    left: 0;
+}
+.ancets-control__my{
+    right: 0;
+}
+.quesList-block__status{
+    display: flex;
+    padding-top: 25px;
+}
+.quesList-block__status div{
+    border-radius: 7px;
+    padding: 8px 25px;
+    color:white;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+    cursor:default;
+}
+.quesList-block__status-ok{
+    background-color: var(--green-color);
+}
+.quesList-block__status-wait{
+    background-color: var(--accent-color);
+}
+.quesList-block__status-none{
+    background-color: var(--red-color);
+}
