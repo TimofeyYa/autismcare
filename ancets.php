@@ -73,8 +73,13 @@
                                     <p><?php echo $thisAncet['comment'];?></p>
                                 </div>
                                 <div class="quesList-block__btns">
+                                    <?php if($ancets['status'] == 1){?>
                                     <button class="main-btn__gra">Ответить</button>
                                     <a class="ancetsDecl" id="<?php echo $ancetsMainID;?>" href="#">Отклонить</a>
+                                    <?php }?>
+                                    <?php if($ancets['status'] == 0){?>
+                                        <div class="quesList-decline">Отклонена</div>
+                                    <?php }?>
                                     <a href="user.php?userid=<?php echo $thisAncet['main_number'];?>">Посмотреть профиль</a>
                                     <a href="#">Посмотреть полностью</a>
                                 </div>
@@ -133,8 +138,13 @@
                                     </ol>
                                 </div>
                                 <div class="quesList-block__btns">
+                                    <?php if($ancets['status'] == 1){?>
                                     <button class="main-btn__gra">Ответить</button>
                                     <a class="ancetsDecl" id="<?php echo $ancetsMainID;?>" href="#">Отклонить</a>
+                                    <?php }?>
+                                    <?php if($ancets['status'] == 0){?>
+                                        <div class="quesList-decline">Отклонена</div>
+                                    <?php }?>
                                     <a href="user.php?userid=<?php echo $thisAncet['main_number'];?>">Посмотреть профиль</a>
                                     <a href="#">Посмотреть полностью</a>
                                 </div>
@@ -169,6 +179,7 @@
                                 </div>
                                 <div class="quesList-block__status">
                                   <div class="quesList-block__status-<?php if ($ancets['status'] == 2){?>ok<?php } else  if ($ancets['status'] == 1){?>wait<?php } else  if ($ancets['status'] == 0){?>none<?php }?>">Текущий статус</div>
+                                  <a id="<?php echo $ancets['id'];?>">Удалить</a>
                                 </div>
                             </div>
                             <?php } }?>
@@ -229,6 +240,7 @@
                                 </div>
                                 <div class="quesList-block__status">
                                   <div class="quesList-block__status-<?php if ($ancets['status'] == 2){?>ok<?php } else  if ($ancets['status'] == 1){?>wait<?php } else  if ($ancets['status'] == 0){?>none<?php }?>">Текущий статус</div>
+                                  <a id="<?php echo $ancets['id'];?>">Удалить</a>
                                 </div>
                             </div>
                             <?php } }?>

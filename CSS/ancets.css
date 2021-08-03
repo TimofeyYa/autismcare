@@ -54,6 +54,16 @@
 .quesList-block__status{
     display: flex;
     padding-top: 13px;
+    align-items:center;
+}
+.quesList-block__status a{
+    color: var(--accent-color);
+    font-size: 17px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.quesList-block__status a:hover{
+    text-decoration: underline;
 }
 .quesList-block__status div{
     border-radius: 7px;
@@ -81,4 +91,11 @@
 }
 .quesList-block__target a:hover{
     text-decoration: underline;
+}
+.quesList-decline{
+    display: inline-block;
+    background: var(--red-color);
+    color:white;
+    border-radius: 5px;
+    padding: 10px 20px;
 }

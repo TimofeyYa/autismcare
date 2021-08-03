@@ -66,8 +66,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     ancetsDecl.forEach(item =>{
         item.addEventListener('click', (e)=>{
             e.preventDefault();
-            alert();
-
+         
             const request = new XMLHttpRequest();
 
             request.open('POST', 'vendor/decline.php');
@@ -80,7 +79,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
              
                 if (request.status === 200) {
                     
-                    alert();
+                    window.location.reload();
                 } else {
                     alert('Ошибка сервера, повторите попытку позже');
                 }
@@ -89,4 +88,32 @@ window.addEventListener('DOMContentLoaded', ()=>{
         })
     })
     
+
+    // Удаление анкеты 
+
+    const delBtn = document.querySelectorAll('.quesList-block__status a');
+
+    delBtn.forEach(item =>{
+        item.addEventListener('click', (e)=>{
+            e.preventDefault();
+         
+            const request = new XMLHttpRequest();
+
+            request.open('POST', 'vendor/deliteAncets.php');
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+            let dataMes = `ancID=${item.id}`;
+    
+            request.send(dataMes);
+            request.addEventListener('load', () => {
+             
+                if (request.status === 200) {
+                    item.textContent = "Удалена";
+                    
+                } else {
+                    alert('Ошибка сервера, повторите попытку позже');
+                }
+            })
+        })
+    })
 })

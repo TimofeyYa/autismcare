@@ -68,8 +68,14 @@
                 
                 <div class="page__block chats__wrap">
                     <?php while($chatUser = mysqli_fetch_array($myChats1)){
-                        $userMainNum = $chatUser['main_number2'];
+                        if ($chatUser['main_number2'] != $main_number){
+                            $userMainNum = $chatUser['main_number2'];
                         $userChatNum = $chatUser['chat_number'];
+                        }else{
+                            $userMainNum = $chatUser['main_number1'];
+                            $userChatNum = $chatUser['chat_number'];
+                        }
+                        
 
                         $checkAcc = mysqli_query($connect_users,"SELECT * FROM `accaunts` WHERE `main_number`='$userMainNum'");
                         $checkAcc = mysqli_fetch_assoc($checkAcc);
@@ -104,45 +110,6 @@
                                 <time>Новое сообщение</time>
                             </div>
                             <?php }?>
-                        </div>
-                    </a>
-                    <?php }?>
-
-                    <?php while($chatUser = mysqli_fetch_array($myChats2)){
-                        $userMainNum = $chatUser['main_number1'];
-                        $userChatNum = $chatUser['chat_number'];
-
-                        $checkAcc = mysqli_query($connect_users,"SELECT * FROM `accaunts` WHERE `main_number`='$userMainNum'");
-                        $checkAcc = mysqli_fetch_assoc($checkAcc);
-
-                        $checkInfo = mysqli_query($connect_users,"SELECT * FROM `accaunts-info` WHERE `main_number`='$userMainNum'");
-                        $checkInfo = mysqli_fetch_assoc($checkInfo);
-
-                        $checkMess = mysqli_query($connect_users,"SELECT * FROM `chat__message` WHERE `chat_number`='$userChatNum'");
-
-                        $lastMes;
-                        $maxId = 0;
-                        while ($whileId = mysqli_fetch_array($checkMess)){
-                            if ($whileId['id'] > $maxId){
-                                $lastMes = $whileId['message'];
-                            }
-                            
-                        }
-                        ?>
-                    <a href="?mess=<?php echo $checkAcc['main_number'];?>" class="chats-block">
-                        <div class="chats-block__pic">
-                            <img src="uploads/<?php echo $checkInfo['avatar']; ?>" alt="">
-                        </div>
-                        <div class="chats-block__text">
-                            <div class="chats-block__name">
-                                <h3><?php echo $checkAcc['name'];?></h3>
-                            </div>
-                            <div class="chats-block__lastmes">
-                                <p><?php echo $lastMes;?></>
-                            </div>
-                            <!-- <div class="chats-block__date">
-                                <time>09.10.2020</time>
-                            </div> -->
                         </div>
                     </a>
                     <?php }?>
@@ -331,7 +298,7 @@
 				}
 			});
             const block = document.querySelector('.messager__chat');
-            if ((block.scrollHeight > block.scrollTop + block.offsetHeight) && (block.scrollHeight < block.scrollTop + block.offsetHeight + 100)){
+            if ((block.scrollHeight > block.scrollTop + block.offsetHeight) && (block.scrollHeight < block.scrollTop + block.offsetHeight + 40)){
                 block.scrollTop = block.scrollHeight;
                 console.log(block.scrollHeight);
             }
