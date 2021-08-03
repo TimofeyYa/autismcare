@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
                 if (request.status === 200) {
                     
                     chatTextarea.value='';
-                    window.location.reload();
+                    // window.location.reload();
                 } else {
                     alert('Ошибка сервера, повторите попытку позже');
                 }
@@ -44,9 +44,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     })
 
-    // проверка наличия сообщений 
+    // прокрутка
 
-    setInterval(()=>{
-        
-    }, 200)
+    const block = document.querySelector('.messager__chat');
+    block.scrollTop = block.scrollHeight;
 })

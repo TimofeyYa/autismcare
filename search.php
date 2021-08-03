@@ -117,6 +117,8 @@
                             </div>
                             <div class="quesList-block__btns">
                                 <button class="main-btn__gra">Отправить анкету</button>
+                                <input type="hidden" class="myAncID" value="<?php if (isset($userQuest)){echo $userQuest['id'];}?>">
+                                <input type="hidden" class="recipientNum" value="<?php echo $specSearch['main_number'];?>">
                                 <a href="user.php?userid=<?php echo $specSearch['main_number'];?>">Посмотреть профиль</a>
                                 <a href="#">Посмотреть полностью</a>
                             </div>

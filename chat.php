@@ -37,7 +37,7 @@
 
    $check_chatMess = mysqli_query($connect_users, "SELECT * FROM `chat__message` WHERE `chat_number` = '$chatId'");
 
-   $myChats1 = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `main_number1` = '$main_number'");
+   $myChats1 = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `main_number1` = '$main_number' OR `main_number2` = '$main_number'");
    $myChats2 = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `main_number2` = '$main_number'");
 
    
@@ -140,9 +140,9 @@
                             <div class="chats-block__lastmes">
                                 <p><?php echo $lastMes;?></>
                             </div>
-                            <div class="chats-block__date">
+                            <!-- <div class="chats-block__date">
                                 <time>09.10.2020</time>
-                            </div>
+                            </div> -->
                         </div>
                     </a>
                     <?php }?>
@@ -226,9 +226,6 @@
                                 </div>
                                 <?php }?>
                           
-
-                     
-
 
                             </div>
                             <div class="messager__control">
@@ -322,7 +319,33 @@
     <?php require_once('INC/footer.php')?>
     <script src="JS/system.js"></script>
     <script src="JS/chat.js"></script>
-
+    <script>
+        const messId = document.querySelector('.messId').value;
+        		function show()
+		{
+			$.ajax({
+				url: `messager.php?mess=${messId}`,
+				cache: false,
+				success: function(html){
+					$(".messager__chat").html(html);
+				}
+			});
+            const block = document.querySelector('.messager__chat');
+            if ((block.scrollHeight > block.scrollTop + block.offsetHeight) && (block.scrollHeight < block.scrollTop + block.offsetHeight + 100)){
+                block.scrollTop = block.scrollHeight;
+                console.log(block.scrollHeight);
+            }
+  
+		}
+	
+		$(document).ready(function(){
+			show();
+			setInterval('show()',400);
+            
+           
+            
+		});
+	</script>                               
 </body>
 
 </html>

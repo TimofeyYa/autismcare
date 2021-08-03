@@ -58,5 +58,35 @@ window.addEventListener('DOMContentLoaded', ()=>{
             item.textContent = 'Отклонена';
         }
     })
+
+
+    // отклонить анкету
+    const ancetsDecl = document.querySelectorAll('.ancetsDecl');
+   
+    ancetsDecl.forEach(item =>{
+        item.addEventListener('click', (e)=>{
+            e.preventDefault();
+            alert();
+
+            const request = new XMLHttpRequest();
+
+            request.open('POST', 'vendor/decline.php');
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+            let dataMes = `ancID=${item.id}`;
+    
+            request.send(dataMes);
+            request.addEventListener('load', () => {
+             
+                if (request.status === 200) {
+                    
+                    alert();
+                } else {
+                    alert('Ошибка сервера, повторите попытку позже');
+                }
+            })
+
+        })
+    })
     
 })
