@@ -38,9 +38,32 @@
    $check_chatMess = mysqli_query($connect_users, "SELECT * FROM `chat__message` WHERE `chat_number` = '$chatId'");
 
    $myChats1 = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `main_number1` = '$main_number' OR `main_number2` = '$main_number'");
-   $myChats2 = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `main_number2` = '$main_number'");
-
    
+   
+   $check_userKids = mysqli_query($connect_users, "SELECT * FROM `accaunts-kids` WHERE `main_number` = '$main_number'");
+     $check_userQuest = mysqli_query($connect_users, "SELECT * FROM `user__quest-spec` WHERE `main_number` = '$main_number'");
+     if (mysqli_num_rows($check_userQuest) > 0){
+        $userQuest = mysqli_fetch_assoc($check_userQuest);
+
+
+    }
+    if ($check_userMess['type'] == 2){
+        $check_userKids = mysqli_query($connect_users, "SELECT * FROM `accaunts-kids` WHERE `main_number` = '$messId'");
+        $spec_number = $main_number;
+        $passient_number = $messId;
+    }else
+    if ($_SESSION['user']['type'] == 2){
+        $check_userKids = mysqli_query($connect_users, "SELECT * FROM `accaunts-kids` WHERE `main_number` = '$main_number'");
+        $spec_number = $messId;
+        $passient_number = $main_number;
+    } else {
+        $check_userKids = 'none';
+    }
+    if ($_SESSION['user']['type'] == 2 && $check_userMess['type'] == 2){
+        $check_userKids = 'none';
+    }
+    
+    $serviceId = time() + $main_number;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -53,6 +76,7 @@
     <link rel="stylesheet" href="CSS/reset.css">
     <link rel="stylesheet" href="CSS/normalize.css">
     <link rel="stylesheet" href="CSS/system.css">
+    <link rel="stylesheet" href="CSS/search.css">
     <link rel="stylesheet" href="CSS/chat.css">
 
 </head>
@@ -65,7 +89,7 @@
         <?php if (!isset($_GET['mess'])){?>
         <section class="chats">
             <div class="container">
-                
+
                 <div class="page__block chats__wrap">
                     <?php while($chatUser = mysqli_fetch_array($myChats1)){
                         if ($chatUser['main_number2'] != $main_number){
@@ -187,18 +211,33 @@
                             <div class="messager__chat">
                                 <?php while ($message = mysqli_fetch_array($check_chatMess)){?>
                                 <div class="messager__chat-block">
-                                    <div class="messager__chat-mes <?php if ($message['main_number'] == $main_number){?>messager__chat-mes-me<?php } else{?>messager__chat-mes-user<?php }?>">
+                                    <div
+                                        class="messager__chat-mes <?php if ($message['main_number'] == $main_number){?>messager__chat-mes-me<?php } else{?>messager__chat-mes-user<?php }?>">
                                         <p><?php echo $message['message'];?></>
                                     </div>
                                 </div>
                                 <?php }?>
-                          
+
 
                             </div>
                             <div class="messager__control">
+                                <div class="messager-full">
+                                    <div class="messager-full__wrap">
+                                        <div class="messager-full__add">
+                                            <?php if (isset($userQuest)){?><button class="addAncet"
+                                                id="<?php echo $userQuest['id'];?>">Добавить анкету</button><?php };?>
+                                                <?php if ($check_userKids != 'none'){?><button id="addServise" class="">Добавить услугу</button><?php };?>
+                                            
+                                            <input type="hidden" id='ancetInfo' value="">
+                                            <input type="hidden" id='serviceInfo' value="">
+                                        </div>
+                                        <div class="messager-full__select"></div>
+                                    </div>
+                                </div>
                                 <div class="messager__control-content">
                                     <input type="hidden" class="messId" value="<?php echo $messId;?>">
-                                    <textarea class="messager__control-textarea" name="<?php echo $chatId;?>" id="" ></textarea>
+                                    <textarea class="messager__control-textarea" name="<?php echo $chatId;?>"
+                                        id=""></textarea>
                                     <div class="messager__control-svg messager__control-send">
                                         <svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24"
                                             width="512" xmlns="http://www.w3.org/2000/svg">
@@ -206,7 +245,7 @@
                                                 d="m8.75 17.612v4.638c0 .324.208.611.516.713.077.025.156.037.234.037.234 0 .46-.11.604-.306l2.713-3.692z" />
                                             <path
                                                 d="m23.685.139c-.23-.163-.532-.185-.782-.054l-22.5 11.75c-.266.139-.423.423-.401.722.023.3.222.556.505.653l6.255 2.138 13.321-11.39-10.308 12.419 10.483 3.583c.078.026.16.04.242.04.136 0 .271-.037.39-.109.19-.116.319-.311.352-.53l2.75-18.5c.041-.28-.077-.558-.307-.722z" />
-                                            </svg>
+                                        </svg>
 
                                     </div>
                                     <div class="messager__control-svg messager__control-add">
@@ -284,35 +323,225 @@
         <?php }?>
     </main>
     <?php require_once('INC/footer.php')?>
+
+    <div class="popup__service-wrap">
+        <div class="popup__service-content">
+            <div class="popup__service-exit">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32"
+                    style="enable-background:new 0 0 32 32;" xml:space="preserve">
+                    <g>
+                        <g id="x_x5F_alt">
+                            <path d="M16,0C7.164,0,0,7.164,0,16s7.164,16,16,16s16-7.164,16-16S24.836,0,16,0z M23.914,21.086
+                l-2.828,2.828L16,18.828l-5.086,5.086l-2.828-2.828L13.172,16l-5.086-5.086l2.828-2.828L16,13.172l5.086-5.086l2.828,2.828
+                L18.828,16L23.914,21.086z" />
+                        </g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                    <g>
+                    </g>
+                </svg>
+            </div>
+            <div class="popup__service-title">
+                <h2>Предложить услугу</h2>
+            </div>
+            <div class="popup__service-form">
+                <form action="">
+                    
+                    <input type="hidden" value="<?php echo $serviceId;?>" id="serviceId" name="serviceId">
+                    <input type="hidden" value="<?php echo $spec_number;?>" name="spec_number">
+                    <input type="hidden" value="<?php echo $passient_number;?>" name="passient_number">
+                    <div class="popup__service-formTop">
+                        <input type="text" placeholder="Название для услуги" name="title" class="popup__service-inpTitle">
+                        <input type="number" name="cost" placeholder="Стоимость" class="popup__service-inpPrice">
+                        <p>Рублей</p>
+                    </div>
+                    <div class="popup__service-formMidle">
+                        <select name="type" >
+                            <option id='once' selected value="1">Один раз</option>
+                            <option id='week' value="2">Каждую неделю</option>
+                        </select>
+                        <div class="popup__service-formOnce">
+                            <input type="date" name="date" class="popup__service-inpData">
+                            <input type="time" name='dateTime' >
+                        </div>
+                    </div>
+                    <div class="popup__service-formEvryWeek">
+                        <div class="popup__service-weekDay">
+                            <p>Понедельник</p>
+                            <input type="time"  name="day1">
+                        </div>
+                        <div class="popup__service-weekDay">
+                            <p>Вторник</p>
+                            <input type="time" name="day2">
+                        </div>
+                        <div class="popup__service-weekDay">
+                            <p>Среда</p>
+                            <input type="time" name="day3">
+                        </div>
+                        <div class="popup__service-weekDay">
+                            <p>Четверг</p>
+                            <input type="time" name="day4">
+                        </div>
+                        <div class="popup__service-weekDay">
+                            <p>Пятница</p>
+                            <input type="time" name="day5">
+                        </div>
+                        <div class="popup__service-weekDay">
+                            <p>Суббота</p>
+                            <input type="time" name="day6">
+                        </div>
+                        <div class="popup__service-weekDay">
+                            <p>Воскресенье</p>
+                            <input type="time" name="day7">
+                        </div>
+                    </div>
+                    <div class="popup__service-formComment">
+                        <textarea name="comment" id=""></textarea>
+                    </div>
+                    <div class="popup__service-formKid">
+                        <?php $i=1; while ($kid = mysqli_fetch_array($check_userKids)){
+                            $kidId = $kid['id'];
+                            $itSelect = 0;
+                            for ($j = 1; $j <= 7; $j++){
+                                $checkItem = 'kid'.$j;
+                                
+                                $check_selKid = mysqli_query($connect_users, "SELECT * FROM `user__quest-kid` WHERE `main_number` = '$main_number' AND `$checkItem` = '$kidId'");
+                                if (mysqli_num_rows($check_selKid) > 0){
+                                   
+                                    $itSelect = 1;
+                                }
+                            }
+
+
+                            ?>
+                        <div class="popup__quest-kids-block <?php if($itSelect == 1){?>popup__quest-block-select<?php };?>">
+                            <input type="hidden" class="questHiddenInp" name="kid-<?php echo $i;?>" value >
+                            <div class="popup__quest-kids-id"><?php echo $kid['id'];?></div>
+                            <?php echo $kid['name'];?>
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 148.961 148.961" style="enable-background:new 0 0 148.961 148.961;" xml:space="preserve">
+                       <g>
+                           <path d="M146.764,17.379c-2.93-2.93-7.679-2.929-10.606,0.001L68.852,84.697L37.847,53.691c-2.93-2.929-7.679-2.93-10.606-0.001
+                               c-2.93,2.929-2.93,7.678-0.001,10.606l36.309,36.311c1.407,1.407,3.314,2.197,5.304,2.197c1.989,0,3.897-0.79,5.304-2.197
+                               l72.609-72.622C149.693,25.057,149.693,20.308,146.764,17.379z"/>
+                           <path d="M130.57,65.445c-4.142,0-7.5,3.357-7.5,7.5v55.57H15V20.445h85.57c4.143,0,7.5-3.357,7.5-7.5c0-4.142-3.357-7.5-7.5-7.5
+                               H7.5c-4.142,0-7.5,3.357-7.5,7.5v123.07c0,4.143,3.358,7.5,7.5,7.5h123.07c4.143,0,7.5-3.357,7.5-7.5v-63.07
+                               C138.07,68.803,134.713,65.445,130.57,65.445z"/>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       <g>
+                       </g>
+                       </svg>
+                    </div>
+                    <?php $i =$i +1; };?>
+                    </div>
+                   
+                
+                    </div>
+                    <div class="popup__service-formBottom">
+                        <div class="popup__service-duration">
+                        <input name='duration' type="number" class="popup__service-inpduration" placeholder="60">
+                        <p>Продолжительность в минутах</p>
+                        </div>
+                        <button type="submit" class="popup__service-btn">Предложить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="JS/system.js"></script>
     <script src="JS/chat.js"></script>
     <script>
         const messId = document.querySelector('.messId').value;
-        		function show()
-		{
-			$.ajax({
-				url: `messager.php?mess=${messId}`,
-				cache: false,
-				success: function(html){
-					$(".messager__chat").html(html);
-				}
-			});
-            const block = document.querySelector('.messager__chat');
-            if ((block.scrollHeight > block.scrollTop + block.offsetHeight) && (block.scrollHeight < block.scrollTop + block.offsetHeight + 40)){
+        const sendBtn = document.querySelector('.messager__control-send svg');
+
+        sendBtn.addEventListener('click', ()=>{
+            show();
+        })
+        function show() {
+            $.ajax({
+                url: `messager.php?mess=${messId}`,
+                cache: false,
+                success: function (html) {
+                    $(".messager__chat").html(html);
+                }
+            });
+            setTimeout(()=>{
+                const block = document.querySelector('.messager__chat');
+            if ((block.scrollHeight > block.scrollTop + block.offsetHeight) && (block.scrollHeight < block.scrollTop +
+                    block.offsetHeight + 100)) {
                 block.scrollTop = block.scrollHeight;
                 console.log(block.scrollHeight);
             }
-  
-		}
-	
-		$(document).ready(function(){
-			show();
-			setInterval('show()',400);
+            }, 200)
             
-           
-            
-		});
-	</script>                               
+
+        }
+
+        $(document).ready(function () {
+            show();
+            setInterval('show()', 1250);
+
+
+
+        });
+        
+    </script>
 </body>
 
 </html>

@@ -99,3 +99,7 @@
     border-radius: 5px;
     padding: 10px 20px;
 }
+.messager-full button{
+    padding-bottom: 5px;
+    background-color: var(--purple-color);
+}
