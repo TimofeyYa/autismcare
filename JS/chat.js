@@ -2,6 +2,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
     // увеличение textarea
     const chatTextarea = document.querySelector('.messager__control-textarea');
     const messagerControlContent = document.querySelector('.messager__control-content');
+    const addAncet = document.querySelector('.addAncet');
+    const addServise = document.querySelector('#addServise');
 
     if (chatTextarea){
        chatTextarea.addEventListener('input',()=>{
@@ -21,7 +23,10 @@ window.addEventListener('DOMContentLoaded', ()=>{
     sendMessageBtn.addEventListener('click', ()=>{
         if (chatTextarea.value.length > 0 && chatTextarea.value != ' '){
 
-            let dataMes =`message=${chatTextarea.value}&chatid=${chatTextarea.name}&messid=${messId}`;
+            let ancetInfo = document.querySelector('#ancetInfo').value;
+            let serviceInfo = document.querySelector('#serviceInfo').value;
+
+            let dataMes =`message=${chatTextarea.value}&chatid=${chatTextarea.name}&messid=${messId}&ancetInfo=${ancetInfo}&serviceInfo=${serviceInfo}`;
             const request = new XMLHttpRequest();
             request.open('POST', 'vendor/sendMessage.php');
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -33,6 +38,15 @@ window.addEventListener('DOMContentLoaded', ()=>{
             request.addEventListener('load', () => {
          
                 if (request.status === 200) {
+                    document.querySelector('#ancetInfo').value = '';
+                    document.querySelector('#serviceInfo').value ='';
+                    if(addAncet){
+                        addAncet.classList.remove('mesBtnSelect');
+                    }
+                    
+                    if(addServise){
+                       addServise.classList.remove('mesBtnSelect'); 
+                    }
                     
                     chatTextarea.value='';
                     // window.location.reload();
@@ -55,8 +69,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
     // Добавим анкету и услугу 
 
     const AddItemBtn = document.querySelectorAll('.messager-full__add button');
-    const addAncet = document.querySelector('.addAncet');
+    
     const ancetInfo = document.querySelector('#ancetInfo');
+    
 
     if (addAncet){
     addAncet.addEventListener('click', ()=>{
@@ -118,7 +133,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     const popup__serviceExit = document.querySelector('.popup__service-exit');
     const popup__serviceWrap = document.querySelector('.popup__service-wrap');
-    const addServise = document.querySelector('#addServise');
+    const main_number = document.querySelector('.passient_number').value;
+    const main_number2 = document.querySelector('.spec_number').value;
+    const  serviceId = document.querySelector('#serviceId');
     const serviceInfo = document.querySelector('#serviceInfo');
 
     popup__serviceExit.addEventListener('click', ()=>{
@@ -126,11 +143,20 @@ window.addEventListener('DOMContentLoaded', ()=>{
     })
     addServise.addEventListener("click", ()=>{
         popup__serviceWrap.style.display = 'flex';
+        serviceId.value =Number(main_number) + Number(main_number2) + Number(getRandomInt(0, 15000));
     })
     
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+      }
+
+
     function isService(){
         if (serviceInfo.value != ''){
             addServise.classList.add('mesBtnSelect');
+            
         } else {
             addServise.classList.remove('mesBtnSelect');
         }
@@ -180,7 +206,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     // создание услуги 
 
     const serviceForm = document.querySelector('.popup__service-form form');
-    const  serviceId = document.querySelector('#serviceId');
+    
 
     serviceForm.addEventListener('submit', (e)=>{
         e.preventDefault();
@@ -208,4 +234,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
             }
         })
     })
+
+    
 })

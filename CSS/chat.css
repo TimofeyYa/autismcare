@@ -129,6 +129,13 @@
     font-size: 16px;
     padding: 8px 6px;
 }
+.messager__chat-mesAnc{
+    background-color:#f9f9f9;
+    border-radius: 5px;
+    max-width: 520px;
+    font-size: 16px;
+    padding: 20px 15px;
+}
 .messager__chat-mes-me{
     border: 2px solid var(--accent-color);
     float: right;
@@ -424,4 +431,77 @@
     height: 31px;
     border-radius: 5px;
     padding: 8px 10px
+}
+.quesList-block{
+    padding-bottom: 20px;
+    border-bottom: 0px solid transparent;
+}
+.service__title h2{
+    font-size: 25px;
+    font-weight: 500;
+    padding-bottom: 3px;
+}
+.service__type p{
+    color: var(--accent-color);
+    font-size: 22px;
+    padding-bottom: 20px;
+}
+.service__subtitle h3{
+    font-size: 18px;
+    font-weight: 500;
+    padding-bottom: 7px;
+}
+.service-sec{
+    padding-bottom: 5px;
+    font-size: 17px;
+}
+.service-sec span{
+    color: var(--accent-color);
+    font-weight: 500;
+}
+.service__comment{
+    padding-bottom: 25px;
+}
+.service__comment-item{
+    padding-top: 3px;
+    color:var(--grey-color);
+}
+.service__assept-status{
+    padding: 8px 16px;
+    background-color:white;
+    border-radius: 7px;
+    border: 2px solid var(--accent-color);
+    text-align: center;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+.service__assept-btn button{
+    padding: 8px 20px;
+    color: white;
+    font-size: 16px;
+    background: var(--main-grad);
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.service__assept-btn button:hover{
+    transform: translate(0,-3px);
+}
+.service__assept-btn button:last-child{
+    margin-left: 15px;
+}
+.service__assept-btn{
+    display: flex;
+    justify-content: center;
+}
+.service__week{
+    padding-bottom: 20px;
+    padding-top: 7px;
+}
+.service__week h3{
+    font-size: 17px;
+    font-weight: 500;
+    padding-bottom: 3px;
+    color:var(--accent-color);
 }

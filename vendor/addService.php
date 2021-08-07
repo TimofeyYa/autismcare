@@ -31,13 +31,14 @@
    if ($type == 1){
       mysqli_query($connect_users,"INSERT INTO `service__db` (`id`, `patient_number`, `spec_number`, `service_number`, `title`, `price`, `data`, `dataTime`, `days`, `type`, `duration`, `kid-id`, `Comment`, `status`, `author`) VALUES
     (NULL, '$passient_number', '$spec_number', '$serviceId', '$title', '$cost', '$date', '$dateTime',NULL, '$type', '$duration', '$kid', '$comment', 'wait', '$main_number')");
-    echo 'hello world';
+    echo 'hello world 1';
+    echo mysqli_errno($connect_users) . ": " . mysqli_error($connect_users) . "\n";
    }
    // mysqli_query($connect_users, "INSERT INTO `service__data` (`id`, `patient_number`, `spec_number`, `service_number`, `title`, `price`, `data`, `dataTime`, `days`, `type`, `duration`, `kid-id`, `Comment`, `status`) VALUES
    //   (NULL, '$passient_number', '', '', '', '', '','', '', '', '', '', '', '')");
    if ($type == 2){
       mysqli_query($connect_users,"INSERT INTO `service__db` (`id`, `patient_number`, `spec_number`, `service_number`, `title`, `price`, `data`, `dataTime`, `days`, `type`, `duration`, `kid-id`, `Comment`, `status`, `author`) VALUES
     (NULL, '$passient_number', '$spec_number', '$serviceId', '$title', '$cost', NULL, NULL,'$days', '$type', '$duration', '$kid', '$comment', 'wait', '$main_number')");
-    echo 'hello world';
+    echo 'hello world 2';
    }
    

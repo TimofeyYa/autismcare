@@ -213,7 +213,7 @@
                                 <div class="messager__chat-block">
                                     <div
                                         class="messager__chat-mes <?php if ($message['main_number'] == $main_number){?>messager__chat-mes-me<?php } else{?>messager__chat-mes-user<?php }?>">
-                                        <p><?php echo $message['message'];?></>
+                                        <p><?php echo $message['message'];?></p>
                                     </div>
                                 </div>
                                 <?php }?>
@@ -376,11 +376,11 @@
                 <form action="">
                     
                     <input type="hidden" value="<?php echo $serviceId;?>" id="serviceId" name="serviceId">
-                    <input type="hidden" value="<?php echo $spec_number;?>" name="spec_number">
-                    <input type="hidden" value="<?php echo $passient_number;?>" name="passient_number">
+                    <input type="hidden" value="<?php echo $spec_number;?>" class="spec_number" name="spec_number">
+                    <input type="hidden" value="<?php echo $passient_number;?>" class="passient_number" name="passient_number">
                     <div class="popup__service-formTop">
-                        <input type="text" placeholder="Название для услуги" name="title" class="popup__service-inpTitle">
-                        <input type="number" name="cost" placeholder="Стоимость" class="popup__service-inpPrice">
+                        <input type="text" maxlength="55" placeholder="Название для услуги" name="title" class="popup__service-inpTitle">
+                        <input type="number" maxlength="6" name="cost" placeholder="Стоимость" class="popup__service-inpPrice">
                         <p>Рублей</p>
                     </div>
                     <div class="popup__service-formMidle">
@@ -424,7 +424,7 @@
                         </div>
                     </div>
                     <div class="popup__service-formComment">
-                        <textarea name="comment" id=""></textarea>
+                        <textarea name="comment" maxlength="499" id=""></textarea>
                     </div>
                     <div class="popup__service-formKid">
                         <?php $i=1; while ($kid = mysqli_fetch_array($check_userKids)){
@@ -509,6 +509,16 @@
     <script>
         const messId = document.querySelector('.messId').value;
         const sendBtn = document.querySelector('.messager__control-send svg');
+        const block = document.querySelector('.messager__chat');
+
+        setTimeout(()=>{
+            block.scrollTop = block.scrollHeight;
+        }, 300)
+        
+        
+        
+        
+        
 
         sendBtn.addEventListener('click', ()=>{
             show();
@@ -522,12 +532,13 @@
                 }
             });
             setTimeout(()=>{
-                const block = document.querySelector('.messager__chat');
+                
             if ((block.scrollHeight > block.scrollTop + block.offsetHeight) && (block.scrollHeight < block.scrollTop +
                     block.offsetHeight + 100)) {
                 block.scrollTop = block.scrollHeight;
-                console.log(block.scrollHeight);
+                
             }
+            setEvent();
             }, 200)
             
 
@@ -535,12 +546,68 @@
 
         $(document).ready(function () {
             show();
-            setInterval('show()', 1250);
+            setInterval('show()', 2200);
 
 
 
         });
         
+        function setEvent(){
+            const declineService = document.querySelectorAll('.declineService');
+            const acceptService = document.querySelectorAll('.asseptService');
+            
+            declineService.forEach(item=>{
+                item.addEventListener('click',()=>{
+                    $thisId = item.id;
+
+                    let dataMes = `id=${$thisId}`;
+
+                    const request = new XMLHttpRequest();
+                    request.open('POST', 'vendor/declineService.php');
+                    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                    request.send(dataMes);
+
+            
+         
+                    request.addEventListener('load', () => {
+                
+                        if (request.status === 200) {
+                            show();
+                            // window.location.reload();
+                        } else {
+                            alert('Ошибка сервера, повторите попытку позже');
+                        }
+                    })
+                })
+            })
+
+            acceptService.forEach(item=>{
+                item.addEventListener('click',()=>{
+                    $thisId = item.id;
+
+                    let dataMes = `id=${$thisId}`;
+
+                    const request = new XMLHttpRequest();
+                    request.open('POST', 'vendor/acceptService.php');
+                    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                    request.send(dataMes);
+
+            
+         
+                    request.addEventListener('load', () => {
+                
+                        if (request.status === 200) {
+                            show();
+                            // window.location.reload();
+                        } else {
+                            alert('Ошибка сервера, повторите попытку позже');
+                        }
+                    })
+                })
+            })
+        }
     </script>
 </body>
 

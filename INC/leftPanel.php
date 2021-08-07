@@ -32,6 +32,7 @@
                     <li class="nav-panel__item"><a href="search.php">Поиск</a></li>
                     <li class="nav-panel__item"><a href="chat.php">Чат</a></li>
                     <li class="nav-panel__item"><a href="ancets.php">Анкеты</a></li>
+                    <li class="nav-panel__item"><a href="mylesson.php">Мои занятия</a></li>
 
                 </ul>
             </div>
