@@ -228,7 +228,7 @@
                                                 id="<?php echo $userQuest['id'];?>">Добавить анкету</button><?php };?>
                                                 <?php if ($check_userKids != 'none'){?><button id="addServise" class="">Добавить услугу</button><?php };?>
                                             
-                                            <input type="hidden" id='ancetInfo' value="">
+                                            <input type="hidden" id='ancetInfo' value="<?php echo $_GET['sendAnc']; unset($_GET['sendAnc']);?>">
                                             <input type="hidden" id='serviceInfo' value="">
                                         </div>
                                         <div class="messager-full__select"></div>

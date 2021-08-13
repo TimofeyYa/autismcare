@@ -25,6 +25,15 @@ if ($_SESSION['user']['type'] == 2) {
 }
 
 
+$dateNow = date("Y-m-d", time());
+
+if ($_SESSION['user']['type'] == 1) {
+    $check__UserServiceSoon = mysqli_query($connect_users, "SELECT * FROM `service__db` WHERE `spec_number` = '$main_number' AND `status` = 'ok' AND (`data` = '$dateNow' OR `type` = 2)");
+}
+if ($_SESSION['user']['type'] == 2) {
+    $check__UserServiceSoon = mysqli_query($connect_users, "SELECT * FROM `service__db` WHERE `patient_number` = '$main_number' AND `status` = 'ok' AND (`data` = '$dateNow' OR `type` = 2)");
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -54,26 +63,91 @@ if ($_SESSION['user']['type'] == 2) {
                         <h2>Скоро начнутся</h2>
                     </div>
                     <div class="mylesson__content mylesson__content-soon">
-                        <div class="mylesson-block">
-                            <div class="mylesson-block__top">
-                                <h3>Какой то интересный заголовок</h3>
-                            </div>
-                            <div class="mylesson-block__center">
-                                <h5>Одно занятие</h5>
-                                <h4>Информация о встрече</h4>
-                                <p>Дата занятия: <span>13:30</span></p>
-                                <p>Клиент: <span><a>Уся Пупкин</a></span></p>
-                                <p>Ребёнок: <span>Гисмед Худовердиев</span></p>
-                                <p class="mylesson-block__comment">Комментарий: <span>Какой то не сусветно огромный комментарий описывающий красоты такой великой и прекрасной страны как могучий Азербайджан</span></p>
-                            </div>
-                            <div class="mylesson-block__bottom">
-                                <button class="mylesson-block__histBtn">История</button>
-                                <div class="mylesson-block__mainBtn">
-                                    <p>Перейти к занятию</p>
+                    <?php while ($UserServ = mysqli_fetch_array($check__UserServiceSoon)) {
+                        $days = json_decode($UserServ['days'], true);
+                        $weekDay = date( "N" );
 
+                        if (empty($days[$weekDay]) && $UserServ['type'] == 2){
+                            continue;
+                        }
+
+                            $date = $UserServ['data'];
+                            $date = date("d.m.Y", strtotime($date));
+
+                            $kidId = $UserServ['kid-id'];
+
+                            $kidInfo = mysqli_query($connect_users, "SELECT * FROM `accaunts-kids` WHERE `id` = '$kidId'");
+                            $kidInfo = mysqli_fetch_assoc($kidInfo);
+
+                        ?>
+                            <div class="mylesson-block">
+                                <div class="mylesson-block__top">
+                                    <h3><?php echo $UserServ['title']; ?></h3>
+                                </div>
+                                <div class="mylesson-block__center">
+                                    <h5><?php if ($UserServ['type'] == 1) { ?>Одно занятие<?php } else if ($UserServ['type'] == 2) { ?>Каждую неделю<?php } ?></h5>
+                                    <h4>Информация о встрече</h4>
+                                    <?php if ($UserServ['type'] == 1) { ?>
+                                        <p>Дата занятия: <span><?php echo $date; ?></span> в <span><?php echo $UserServ['dataTime']; ?></span></p>
+                                    <?php } ?>
+                                    <?php if ($UserServ['type'] == 2) { ?>
+                                        <div class="service__week">
+                                            <h3>Расписание занятий:</h3>
+                                            <?php ?>
+                                            <?php
+                                            
+
+                                            $week = array(
+                                                '1' => 'Понедельник',
+                                                '2' => 'Вторник',
+                                                '3' => 'Среда',
+                                                '4' => 'Четверг',
+                                                '5' => 'Пятница',
+                                                '6' => 'Суббота',
+                                                '7' => 'Воскресенье',
+                                            );
+
+                                            for ($i = 1; $i <= 7; $i++) {
+                                            ?>
+                                                <?php if (!empty($days[$i])) { ?>
+                                                    <p><?php echo $week[$i] ?>: <?php echo $days[$i] ?></p>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if ($UserServ['spec_number'] == $main_number) {
+                                        $userId = $UserServ['patient_number'];
+
+                                        $userInfo = mysqli_query($connect_users, "SELECT * FROM `accaunts` WHERE `main_number` = '$userId'");
+                                        $userInfo = mysqli_fetch_assoc($userInfo);
+
+
+
+                                    ?>
+                                        <p>Клиент: <span><a href="user.php?userid=<?php echo $userId; ?>"><?php echo $userInfo['name']; ?></a></span></p>
+                                    <?php } ?>
+
+
+                                    <?php if ($UserServ['patient_number'] == $main_number) {
+                                        $userId = $UserServ['spec_number'];
+
+                                        $userInfo = mysqli_query($connect_users, "SELECT * FROM `accaunts` WHERE `main_number` = '$userId'");
+                                        $userInfo = mysqli_fetch_assoc($userInfo);
+                                    ?>
+                                        <p>Специалист: <span><a href="user.php?userid=<?php echo $userId; ?>"><?php echo $userInfo['name']; ?></a></span></p>
+                                    <?php } ?>
+                                    <p>Ребёнок: <span><?php echo $kidInfo['name']; ?></span></p>
+                                    <p class="mylesson-block__comment">Комментарий: <span><?php echo $UserServ['Comment']; ?></span></p>
+                                </div>
+                                <div class="mylesson-block__bottom">
+                                    <button class="mylesson-block__histBtn">История</button>
+                                    <div class="mylesson-block__mainBtn">
+                                        <p>Перейти к занятию</p>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php } ?>
                     </div>
                     <div class="mylesson__content mylesson__content-All">
                         <div class="mylesson__content-allTitle">
@@ -163,8 +237,8 @@ if ($_SESSION['user']['type'] == 2) {
                 </div>
             </div>
         </section>
-
-
+    </main>
+        <?php require_once('INC/footer.php')?>
         <script src="JS/system.js"></script>
         <script src="JS/mylesson.js"></script>
         <script src="JS/portfol.js"></script>

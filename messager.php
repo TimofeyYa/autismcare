@@ -52,6 +52,9 @@ $myChats = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `mai
         $thisAncet = mysqli_query($connect_users, "SELECT * FROM `user__quest-spec` WHERE `id` = '$ancetId'");
         $thisAncet = mysqli_fetch_assoc($thisAncet);
         $userNumber = $thisAncet['main_number'];
+        $thisUser = mysqli_query($connect_users, "SELECT * FROM `accaunts` WHERE `main_number` = '$userNumber' ");
+        $thisUser = mysqli_fetch_assoc($thisUser);
+
 
         $check_userDataKids = mysqli_query($connect_users, "SELECT * FROM `user__quest-kid` WHERE `main_number` = '$userNumber' ");
         $check_userDataKids = mysqli_fetch_assoc($check_userDataKids);
@@ -98,6 +101,10 @@ $myChats = mysqli_query($connect_users, "SELECT * FROM `chat__create` WHERE `mai
                 </ol>
             </div>
             <?php }; ?>
+
+            <div class="quesList-block__author">
+                <a href="user.php?userid=<?php echo $thisAncet['main_number'];?>">Перейти на личную страницу</a>
+            </div>
         </div>
     </div>
 </div>

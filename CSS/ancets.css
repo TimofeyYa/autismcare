@@ -56,6 +56,14 @@
     padding-top: 13px;
     align-items:center;
 }
+.quesList-block__btns .main-btn__gra{
+    color:white;
+    padding: 7px 25px;
+    cursor: pointer;
+}
+.quesList-block__btns .main-btn__gra:hover{
+    text-decoration: none;
+}
 .quesList-block__status a{
     color: var(--accent-color);
     font-size: 17px;
@@ -95,6 +103,13 @@
 .quesList-decline{
     display: inline-block;
     background: var(--red-color);
+    color:white;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+.quesList-accept{
+    display: inline-block;
+    background: var(--green-color);
     color:white;
     border-radius: 5px;
     padding: 10px 20px;

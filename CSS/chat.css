@@ -505,3 +505,15 @@
     padding-bottom: 3px;
     color:var(--accent-color);
 }
+.quesList-block__author{
+    padding-top: 20px;
+}
+.quesList-block__author a{
+    font-size: 18px;
+    font-weight: 500;
+    
+    color:var(--accent-color);
+}
+.quesList-block__author a:hover{
+    text-decoration: underline;
+}

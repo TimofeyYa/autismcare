@@ -49,7 +49,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     quesListBlockStatus.forEach(item=>{
         if (item.classList.contains('quesList-block__status-ok')){
-            item.textContent = 'Одобрена';
+            item.textContent = 'Принята';
         }
         if (item.classList.contains('quesList-block__status-wait')){
             item.textContent = 'Ожидаем ответ';
@@ -88,6 +88,33 @@ window.addEventListener('DOMContentLoaded', ()=>{
         })
     })
     
+    const ancetsAssept = document.querySelectorAll('.quesList-assept');
+   
+    ancetsAssept.forEach(item =>{
+        item.addEventListener('click', (e)=>{
+            
+            e.preventDefault();
+         
+            const request = new XMLHttpRequest();
+
+            request.open('POST', 'vendor/acceptAnc.php');
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+            let dataMes = `ancID=${item.id}`;
+    
+            request.send(dataMes);
+            request.addEventListener('load', () => {
+             
+                if (request.status === 200) {
+                    
+                    window.location.href = item.href;
+                } else {
+                    alert('Ошибка сервера, повторите попытку позже');
+                }
+            })
+
+        })
+    })
 
     // Удаление анкеты 
 

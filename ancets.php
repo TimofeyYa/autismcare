@@ -74,11 +74,14 @@
                                 </div>
                                 <div class="quesList-block__btns">
                                     <?php if($ancets['status'] == 1){?>
-                                    <button class="main-btn__gra">Ответить</button>
+                                    <a class="main-btn__gra quesList-assept" id="<?php echo $ancetsMainID;?>"  href="chat.php?mess=<?php echo $thisAncet['main_number'];?>&sendAnc=<?php echo $thisAncet['id'];?>">Ответить</a>
                                     <a class="ancetsDecl" id="<?php echo $ancetsMainID;?>" href="#">Отклонить</a>
                                     <?php }?>
                                     <?php if($ancets['status'] == 0){?>
                                         <div class="quesList-decline">Отклонена</div>
+                                    <?php }?>
+                                    <?php if($ancets['status'] == 2){?>
+                                        <div class="quesList-accept">Принята</div>
                                     <?php }?>
                                     <a href="user.php?userid=<?php echo $thisAncet['main_number'];?>">Посмотреть профиль</a>
                                     <a href="#">Посмотреть полностью</a>
@@ -138,12 +141,15 @@
                                     </ol>
                                 </div>
                                 <div class="quesList-block__btns">
-                                    <?php if($ancets['status'] == 1){?>
-                                    <button class="main-btn__gra">Ответить</button>
+                                <?php if($ancets['status'] == 1){?>
+                                    <a class="main-btn__gra quesList-assept" id="<?php echo $ancetsMainID;?>"  href="chat.php?mess=<?php echo $thisAncet['main_number'];?>&sendAnc=<?php echo $thisAncet['id'];?>">Ответить</a>
                                     <a class="ancetsDecl" id="<?php echo $ancetsMainID;?>" href="#">Отклонить</a>
                                     <?php }?>
                                     <?php if($ancets['status'] == 0){?>
                                         <div class="quesList-decline">Отклонена</div>
+                                    <?php }?>
+                                    <?php if($ancets['status'] == 2){?>
+                                        <div class="quesList-accept">Принята</div>
                                     <?php }?>
                                     <a href="user.php?userid=<?php echo $thisAncet['main_number'];?>">Посмотреть профиль</a>
                                     <a href="#">Посмотреть полностью</a>
