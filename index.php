@@ -739,7 +739,7 @@
                 <input type="text" name="password__confirm" placeholder="Повторите пароль">
                 <select name="type_user" id="" required>
                     <option value="none" selected disabled>Ваша роль</option>
-                    <option value="1">Пациент</option>
+                    <option value="1">Клиент</option>
                     <option value="2">Специалист</option>
                 </select>
                 <button type="submit">Зарегистрироваться</button>

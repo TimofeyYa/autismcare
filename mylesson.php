@@ -140,11 +140,11 @@ if ($_SESSION['user']['type'] == 2) {
                                     <p class="mylesson-block__comment">Комментарий: <span><?php echo $UserServ['Comment']; ?></span></p>
                                 </div>
                                 <div class="mylesson-block__bottom">
-                                    <button class="mylesson-block__histBtn">История</button>
-                                    <div class="mylesson-block__mainBtn">
+                                    <button class="mylesson-block__histBtn" onclick="window.location.href ='story.php'">История</button>
+                                    <a target="_blank" href="https://pure-peak-27633.herokuapp.com/room/<?php echo $UserServ['service_number'];?>" class="mylesson-block__mainBtn">
                                         <p>Перейти к занятию</p>
 
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         <?php } ?>
@@ -224,10 +224,9 @@ if ($_SESSION['user']['type'] == 2) {
                                 </div>
                                 <div class="mylesson-block__bottom">
                                     <button class="mylesson-block__histBtn">История</button>
-                                    <div class="mylesson-block__mainBtn">
+                                    <a target="_blank" href="https://pure-peak-27633.herokuapp.com/room/<?php echo $UserServ['service_number'];?>" class="mylesson-block__mainBtn">
                                         <p>Перейти к занятию</p>
-
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         <?php } ?>

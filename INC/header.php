@@ -22,7 +22,7 @@
                     <div class="header-profil__text">
                         <p class="header-profil__name"><?php echo $_SESSION['user']['full_name']; ?></p>
                         <p class="header-profil__balance"><?php if ($_SESSION['user']['type'] == 1){?>Специалист<?php };
-                                 if($_SESSION['user']['type'] == 2){ ?>Пациент<?php } ?></p>
+                                 if($_SESSION['user']['type'] == 2){ ?>Клиент<?php } ?></p>
                     </div>
                     <div class="header-profil__pic">
                         <div class="header-profil__pic-wrap"> <img

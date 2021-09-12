@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
          
             if (request.status === 200) {
                 alert('Анкета обновлена');
-                // document.location.href = 'profil.php';
+                window.location.reload();
             } else {
                 alert('Ошибка сервера, повторите попытку позже');
             }
@@ -154,7 +154,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
         request.addEventListener('load', () => {
          
             if (request.status === 200) {
-                sendAncBtn.textContent = "Запись отправлена";
+                sendAncBtn.textContent = "Анкета отправлена";
                 sendAncBtn.removeEventListener('click', sencAnc);
             } else {
                 alert('Ошибка сервера, повторите попытку позже');

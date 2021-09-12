@@ -5,7 +5,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 require_once 'vendor/connect.php';
-$pageName = "Личный кабинет";
+$pageName = "История занятий";
 
 $main_number =  $_SESSION['user']['main_number'];
 $check_user = mysqli_query($connect_users, "SELECT * FROM `accaunts-info` WHERE `main_number` = '$main_number'");
@@ -35,6 +35,7 @@ $check_userKids = mysqli_query($connect_users, "SELECT * FROM `accaunts-kids` WH
     <link rel="stylesheet" href="CSS/reset.css">
     <link rel="stylesheet" href="CSS/normalize.css">
     <link rel="stylesheet" href="CSS/system.css">
+    <link rel="stylesheet" href="CSS/story.css">
 
 </head>
 
@@ -72,24 +73,23 @@ $check_userKids = mysqli_query($connect_users, "SELECT * FROM `accaunts-kids` WH
                         </select>
                     </div>
                     <div class="story__bottom-content">
-                        <table class="story__bottom-table">
-                            <thead>
-                                <tr>
-                                    <td class="story__bottom-name">Название консультации</td>
-                                    <td class="story__bottom-date">Дата</td>
-                                    <td class="story__bottom-during">Длительность</td>
-                                    <td class="story__bottom-status">Статус</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="story__bottom-name">Название консультации</td>
-                                    <td class="story__bottom-date">Дата</td>
-                                    <td class="story__bottom-during">Длительность</td>
-                                    <td class="story__bottom-status">Статус</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="story__bottom-table">
+                            <div class="story__bottom-item story__bottom-thead">
+                                <div class="story__bottom-block">Название Консультации</div>
+                                <div class="story__bottom-block">Дата</div>
+                                <div class="story__bottom-block">Длительность</div>
+                                <div class="story__bottom-block"></div>
+                                <div class="story__bottom-block story__bottom-status">Статус</div>
+                            </div>
+                            <div class="story__bottom-item ">
+                                <div class="story__bottom-block">Работаем с речью</div>
+                                <div class="story__bottom-block">13.08.2021 в 13:00</div>
+                                <div class="story__bottom-block">30 минут</div>
+                                <div class="story__bottom-block"></div>
+                                <div class="story__bottom-block story__bottom-status story__bottom-status-assept" title="Отменена Специалистом">Успешно</div>
+                                <div class="story__bottom-block"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

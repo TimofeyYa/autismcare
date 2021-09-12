@@ -87,7 +87,7 @@
                              ?>
                             <p>Отзывов на сайте: <span
                                     class="blue__color"><?php echo $_SESSION['user']['stat1'];?></span></p>
-                            <p>Пациентов: <span class="blue__color"><?php echo $_SESSION['user']['stat2'];?></span></p>
+                            <p>Клиентов: <span class="blue__color"><?php echo $_SESSION['user']['stat2'];?></span></p>
                             <?php };?>
                             <?php if ($userBasic['type'] == 2){
                              ?>
@@ -104,7 +104,7 @@
                             </div>
                             <div class="aboutUser__name-bottom">
                                 <h3 class="blue__color "> <?php if ($userBasic['type'] == 1){?>Специалист<?php };
-                                 if($userBasic['type'] == 2){ ?>Пациент<?php }; ?></h3>
+                                 if($userBasic['type'] == 2){ ?>Клиент<?php }; ?></h3>
                             </div>
                         </div>
                         <div class="aboutUser__main-Info">

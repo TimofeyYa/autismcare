@@ -33,7 +33,7 @@
                     <li class="nav-panel__item"><a href="chat.php">Чат</a></li>
                     <li class="nav-panel__item"><a href="ancets.php">Анкеты</a></li>
                     <li class="nav-panel__item"><a href="mylesson.php">Мои занятия</a></li>
-
+                    <li class="nav-panel__item"><a href="balans.php">Мои финансы</a></li>
                 </ul>
             </div>
             <div class="nav-panel__section">
